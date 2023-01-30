@@ -5,7 +5,7 @@ util_arr = [];
 eps_arr = [];
 rr_arr = [];
 
-for epsilon=1.01:0.01:2
+for epsilon=1.01:0.01:3
 
 %epsilon = 2;
 eps = log([epsilon,epsilon]); %privacy level(s)
@@ -69,10 +69,9 @@ rr_arr = [rr_arr rr_util];
 
 end
 
-plot(eps_arr,util_arr);
+plot(eps_arr,util_arr,'LineWidth',2);
 hold on;
-plot(eps_arr, rr_arr);
-xlabel("e^{\epsilon}");
-ylabel("I(X;Y)");
-legend(["optimal PML mechanism","randomized response"]);
-title("Comparison of maximum utility between optimized PML mechanism \\ and randomized response for equal priors");
+plot(eps_arr, rr_arr,'LineWidth',2);
+xlabel("e^{\epsilon}","FontSize",16);
+ylabel("I(X;Y)",'FontSize',16);
+legend(["optimal PML mechanism","randomized response"],'FontSize',16);
