@@ -1,8 +1,14 @@
 % LP for optimal PML mechanism
 
 clear all; clc;
+util_arr = [];
+eps_arr = [];
+rr_arr = [];
 
-eps = log([2,1.5]); %privacy level(s)
+for epsilon=1.01:0.01:2
+
+%epsilon = 2;
+eps = log([epsilon,epsilon]); %privacy level(s)
 expeps = exp(eps);
 lambda_1 = 0.5; %priors
 lambda_2 = 1-lambda_1;
@@ -34,7 +40,7 @@ for idx=1:length(V(:,1))
     vertex = V(idx,:);
     mechanism = [vertex(1) 1-vertex(1)
                  vertex(2) 1-vertex(2)];
-    utility = mi(mechanism,lambda);
+    utility = real(mi(mechanism,lambda)); %real since log may return numerically erronous complex part 
     utils = [utils utility];
 end
 
@@ -49,5 +55,24 @@ f = -utils; %neg utils since standard LP minimizes
 opt = linprog(f,[],[],Aequiv,bequiv,lb,ub);
 
 p_opt = V((opt==1),:);
-opt_mechanism = [p_opt(1) 1-p_opt(1)
-                 p_opt(2) 1-p_opt(2)]
+util_opt = utils((opt==1));
+optimal_mechanism = [p_opt(1) 1-p_opt(1)
+                 p_opt(2) 1-p_opt(2)];
+
+rr_mechanism = (1/(1+epsilon))*[epsilon 1; 1 epsilon];
+
+rr_util = mi(rr_mechanism,lambda);
+
+util_arr = [util_arr util_opt];
+eps_arr = [eps_arr epsilon];
+rr_arr = [rr_arr rr_util];
+
+end
+
+plot(eps_arr,util_arr);
+hold on;
+plot(eps_arr, rr_arr);
+xlabel("e^{\epsilon}");
+ylabel("I(X;Y)");
+legend(["optimal PML mechanism","randomized response"]);
+ti
