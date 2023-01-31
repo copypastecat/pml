@@ -1,4 +1,4 @@
-% LP for optimal PML mechanism
+% LP for optimal PML mechanism for BIBO mechanisms
 
 clear all; clc;
 util_arr = [];
