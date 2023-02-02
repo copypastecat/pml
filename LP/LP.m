@@ -2,12 +2,13 @@
 
 clear all; clc;
 
-N = 4; %source alphabet size
+N = 3; %source alphabet size
 
-epsilon = 1.5;
+epsilon = 1.3;
 eps = log(epsilon*ones(N,1)); %privacy level(s)
 expeps = exp(eps);
 lambda = 1/N*ones(N,1); %priors
+%lambda = [0.7,0.1,0.1,0.1]';
 
 %construct inequality constraint matrix
 A_1 = eye(N) - repmat(lambda',N,1).*(ones(N)-eye(N)) - diag(lambda'*epsilon);
