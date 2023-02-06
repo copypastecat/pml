@@ -4,14 +4,14 @@ clear all; clc;
 
 N = 3; %source alphabet size
 
-epsilon = 1.3;
+epsilon = 1.125;
 eps = log(epsilon*ones(N,1)); %privacy level(s)
 expeps = exp(eps);
-lambda = 1/N*ones(N,1); %priors
+lambda = (1/N)*ones(N,1); %priors
 %lambda = [0.7,0.1,0.1,0.1]';
 
 %construct inequality constraint matrix
-A_1 = eye(N) - repmat(lambda',N,1).*(ones(N)-eye(N)) - diag(lambda'*epsilon);
+A_1 = eye(N) - repmat(lambda',N,1).*(ones(N)*epsilon-eye(N)) - diag(lambda');
 A = [kron(eye(N),A_1);eye(N*N);-eye(N*N)];
 b = [zeros(N*N,1);ones(N*N,1);zeros(N*N,1)];
 
@@ -55,4 +55,4 @@ disp(t3);
 
 p_opt = V((opt==1),:);
 util_opt = utils((opt==1));
-optimal_mechanism = reshape(p_opt,N,N);
+optimal_mechanism = reshape(p_opt,N,N)

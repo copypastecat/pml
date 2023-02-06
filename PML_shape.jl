@@ -2,7 +2,7 @@ import QBase
 
 using Plots, LaTeXStrings
  
- priors = [0.5,0.5] 
+ priors = [0.999,0.001] 
  epsilon_y1 = log(1.5);
  epsilon_y2 = log(1.5);
 

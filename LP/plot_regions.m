@@ -27,22 +27,25 @@ b = beq;
 %convert constraints to extreme points of bounding polytope using lcon2vert
 V = lcon2vert(A,b);
 
-p_1 = 0:0.01:1;
-p_2 = 0:0.01:1;
+p_1 = 0:0.001:1;
+p_2 = 0:0.001:1;
 [P_1,P_2] = meshgrid(p_1,p_2);
 MI = mi_2d(p_1,p_2,lambda');
 levels = (0:0.01:1);
-contour(P_1,P_2,MI,levels,'LineWidth',2); hold on; axis equal;
+contourf(P_1,P_2,MI,levels,'LineWidth',1); hold on; axis equal;
+colormap("hsv");
+%imagesc(MI);
 hf=fill([1 1 0 0],[0 1 1 0],'w','facealpha',0.8);
 
 feasible_pml = is_pml(p_1,p_2,A,b);
 MI(~feasible_pml) = NaN;
-contour(P_1,P_2,MI,levels,'linewidth',2);
-%fill(V(:,1),V(:,2),'w','FaceAlpha',1);
-%fill(V(:,2),V(:,1),'w','FaceAlpha',1);
-%feasible_ldp = is_ldp(p_1,p_2);
-%MI(~feasible_ldp) = NaN;
-%contour(P_1,P_2,MI,levels,'linewidth',2);
+contour(P_1,P_2,MI,levels,'linewidth',1);
+%imagesc(MI);
+fill(V(:,1),V(:,2),'w','FaceAlpha',1);
+fill(V(:,2),V(:,1),'w','FaceAlpha',1);
+feasible_ldp = is_ldp(p_1,p_2);
+MI(~feasible_ldp) = NaN;
+contourf(P_1,P_2,MI,levels,'linewidth',1);
 line([0 V(2,1)],[0 ,V(2,2)]);
 line([0 V(3,1)],[0, V(3,2)]);
 line([1 V(2,1)],[1 V(2,2)]);

@@ -5,14 +5,14 @@ util_arr = [];
 eps_arr = [];
 rr_arr = [];
 
-for epsilon=1.01:0.01:3
+%for epsilon=1.01:0.2:200
 
-%epsilon = 2;
+epsilon = 1.5;
 eps = log([epsilon,epsilon]); %privacy level(s)
 expeps = exp(eps);
-lambda_1 = 0.8; %priors
+lambda_1 = 0.5; %priors
 lambda_2 = 1-lambda_1;
-lambda = [lambda_1,lambda_2];
+lambda = [lambda_1,lambda_2]';
 
 
 %equality constraint matrix for BIBO mechanisms
@@ -57,7 +57,7 @@ opt = linprog(f,[],[],Aequiv,bequiv,lb,ub);
 p_opt = V((opt==1),:);
 util_opt = utils((opt==1));
 optimal_mechanism = [p_opt(1) 1-p_opt(1)
-                 p_opt(2) 1-p_opt(2)];
+                 p_opt(2) 1-p_opt(2)]
 
 rr_mechanism = (1/(1+epsilon))*[epsilon 1; 1 epsilon];
 
@@ -67,11 +67,11 @@ util_arr = [util_arr util_opt];
 eps_arr = [eps_arr epsilon];
 rr_arr = [rr_arr rr_util];
 
-end
+%end
 
-plot(eps_arr,util_arr,'LineWidth',2);
-hold on;
-plot(eps_arr, rr_arr,'LineWidth',2);
-xlabel("e^{\epsilon}","FontSize",16);
-ylabel("I(X;Y)",'FontSize',16);
-legend(["optimal PML mechanism","randomized response"],'FontSize',16);
+%plot(eps_arr,util_arr,'LineWidth',2);
+%hold on;
+%plot(eps_arr, rr_arr,'LineWidth',2);
+%xlabel("e^{\epsilon}","FontSize",16);
+%ylabel("I(X;Y)",'FontSize',16);
+%legend(["optimal PML mechanism","randomized response"],'FontSize',16);
