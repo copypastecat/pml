@@ -2,9 +2,9 @@ import QBase
 
 using Plots, LaTeXStrings
  
- priors = [0.999,0.001] 
- epsilon_y1 = log(1.5);
- epsilon_y2 = log(1.5);
+ priors = [0.5,0.5] 
+ epsilon_y1 = log(1.25);
+ epsilon_y2 = log(1.25);
 
  l(x1,x2)  = log(max(x1,x2)) - log(priors[1]*x1 + priors[2]*x2);
  l2(x1,x2) = log(max((1-x1),(1-x2))) - log(priors[1]*(1-x1) + priors[2]*(1-x2));

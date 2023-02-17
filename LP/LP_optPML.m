@@ -3,14 +3,16 @@
 clear all; clc;
 util_arr = [];
 eps_arr = [];
+lambda_arr = [];
 rr_arr = [];
+lowutil_arr = [];
 
-%for epsilon=1.01:0.2:200
+for lambda_1=0:0.01:1
 
-epsilon = 1.5;
+epsilon = exp(1/2);
 eps = log([epsilon,epsilon]); %privacy level(s)
 expeps = exp(eps);
-lambda_1 = 0.5; %priors
+%lambda_1 = 0.999; %priors
 lambda_2 = 1-lambda_1;
 lambda = [lambda_1,lambda_2]';
 
@@ -57,21 +59,29 @@ opt = linprog(f,[],[],Aequiv,bequiv,lb,ub);
 p_opt = V((opt==1),:);
 util_opt = utils((opt==1));
 optimal_mechanism = [p_opt(1) 1-p_opt(1)
-                 p_opt(2) 1-p_opt(2)]
+                 p_opt(2) 1-p_opt(2)];
 
 rr_mechanism = (1/(1+epsilon))*[epsilon 1; 1 epsilon];
-
 rr_util = mi(rr_mechanism,lambda);
+
+lowutil_mechanism = [epsilon/2 1-(epsilon/2); 1-(epsilon/2) epsilon/2];
+lowutil_util = mi(lowutil_mechanism,lambda);
 
 util_arr = [util_arr util_opt];
 eps_arr = [eps_arr epsilon];
+lambda_arr = [lambda_arr lambda_1];
 rr_arr = [rr_arr rr_util];
+lowutil_arr = [lowutil_arr lowutil_util];
 
-%end
+end
 
 %plot(eps_arr,util_arr,'LineWidth',2);
-%hold on;
+plot(lambda_arr,util_arr,'LineWidth',2);
+hold on;
 %plot(eps_arr, rr_arr,'LineWidth',2);
+plot(lambda_arr,rr_arr,'LineWidth',2);
+plot(lambda_arr,lowutil_arr,"LineWidth",2)
 %xlabel("e^{\epsilon}","FontSize",16);
-%ylabel("I(X;Y)",'FontSize',16);
-%legend(["optimal PML mechanism","randomized response"],'FontSize',16);
+xlabel("\lambda_1","FontSize",16);
+ylabel("I(X;Y)",'FontSize',16);
+legend(["optimal PML mechanism","randomized response","low utility symmetric"],'FontSize',16);

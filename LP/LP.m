@@ -4,11 +4,11 @@ clear all; clc;
 
 N = 3; %source alphabet size
 
-epsilon = 1.125;
+epsilon = 1.1;
 eps = log(epsilon*ones(N,1)); %privacy level(s)
 expeps = exp(eps);
-lambda = (1/N)*ones(N,1); %priors
-%lambda = [0.7,0.1,0.1,0.1]';
+%lambda = (1/N)*ones(N,1); %priors
+lambda = [0.2,0.4,0.4]';
 
 %construct inequality constraint matrix
 A_1 = eye(N) - repmat(lambda',N,1).*(ones(N)*epsilon-eye(N)) - diag(lambda');
@@ -22,6 +22,7 @@ beq = ones(N,1);
 %convert constraints to extreme points of bounding polytope using lcon2vert
 tic;
 V = lcon2vert(A,b,Aeq,beq);
+%V=[1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1]
 t1 = toc;
 disp("time for finding vertices: ");
 disp(t1);
