@@ -7,7 +7,7 @@ lambda_arr = [];
 rr_arr = [];
 lowutil_arr = [];
 
-for lambda_1=0:0.01:1
+%for lambda_1=0:0.01:1
 
 epsilon = exp(1/2);
 eps = log([epsilon,epsilon]); %privacy level(s)
@@ -76,12 +76,13 @@ lowutil_arr = [lowutil_arr lowutil_util];
 end
 
 %plot(eps_arr,util_arr,'LineWidth',2);
-plot(lambda_arr,util_arr,'LineWidth',2);
-hold on;
+%plot(lambda_arr,util_arr,'LineWidth',2);
+%hold on;
 %plot(eps_arr, rr_arr,'LineWidth',2);
-plot(lambda_arr,rr_arr,'LineWidth',2);
-plot(lambda_arr,lowutil_arr,"LineWidth",2)
+%plot(lambda_arr,rr_arr,'LineWidth',2);
+%plot(lambda_arr,lowutil_arr,"LineWidth",2)
 %xlabel("e^{\epsilon}","FontSize",16);
-xlabel("\lambda_1","FontSize",16);
-ylabel("I(X;Y)",'FontSize',16);
-legend(["optimal PML mechanism","randomized response","low utility symmetric"],'FontSize',16);
+%xlabel("\lambda_1","FontSize",16);
+%ylabel("I(X;Y)",'FontSize',16);
+%legend(["optimal PML mechanism","randomized response","low utility symmetric"],'FontSize',16);
+

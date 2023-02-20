@@ -57,3 +57,9 @@ disp(t3);
 p_opt = V((opt==1),:);
 util_opt = utils((opt==1));
 optimal_mechanism = reshape(p_opt,N,N)
+
+p_y = sum((lambda.*optimal_mechanism),1);
+stem(lambda,'LineWidth',2)
+hold on;
+stem(p_y,'LineStyle','--','LineWidth',2);
+legend(["P_X","P_Y"])
